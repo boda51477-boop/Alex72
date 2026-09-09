@@ -18,3 +18,9 @@ client.on('messageCreate', message => {
 client.login(TOKEN);
 app.get('/', (req, res) => res.send('شغال'));
 app.listen(3000);
+// ترحيب في روم ꧁༺-الترحيب-༻꧂
+client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.cache.find(ch => ch.name === '꧁༺-الترحيب-༻꧂');
+  if (!channel) return; // لو ملقاش الروم مش هيبعت
+  channel.send(`✨ **اهلاً وسهلاً بك في ${member.guild.name}** ${member} ✨\nاتمنى تستمتع معانا وتكون اضافة قوية 🔥`);
+});
