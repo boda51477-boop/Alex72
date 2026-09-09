@@ -70,3 +70,11 @@ client.on('messageCreate', async message => {
     message.reply('❌ حصل خطأ وانا بطرد');
   }
 });
+// ID روم الترحيب ꧁༺-الترحيب-༻꧂
+const WELCOME_CHANNEL_ID = '1545828004238856242';
+
+client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.cache.get(WELCOME_CHANNEL_ID);
+  if (!channel) return console.log('ملقتش روم الترحيب بالID'); 
+  channel.send(`✨ **اهلاً وسهلاً بك في ${member.guild.name}** ${member} ✨\nاتمنى تستمتع معانا وتكون اضافة قوية 🔥`);
+});
