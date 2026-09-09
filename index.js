@@ -47,3 +47,26 @@ client.on('messageCreate', async message => {
     message.reply('❌ مقدرتش امسح. الرسايل القديمة اكتر من 14 يوم مبتتمسحش');
   }
 });
+// امر طرد !kick
+client.on('messageCreate', async message => {
+  if (!message.content.startsWith('!kick') || message.author.bot) return;
+
+  // لازم يكون ادمن
+  if (!message.member.permissions.has('KickMembers')) {
+    return message.reply('❌ لازم يكون عندك صلاحية `Kick Members` عشان تطرد');
+  }
+
+  const member = message.mentions.members.first();
+  if (!member) return message.reply('❌ منشن العضو اللي عايز تطرده\nمثال: `!kick @اسم`');
+
+  if (!member.kickable) return message.reply('❌ مقدرش اطرد العضو ده. الرتبة بتاعته اعلى مني');
+
+  const reason = message.content.split(' ').slice(2).join(' ') || 'بدون سبب';
+
+  try {
+    await member.kick(reason);
+    message.channel.send(`✅ تم طرد ${member} \n**السبب:** ${reason}`);
+  } catch (err) {
+    message.reply('❌ حصل خطأ وانا بطرد');
+  }
+});
